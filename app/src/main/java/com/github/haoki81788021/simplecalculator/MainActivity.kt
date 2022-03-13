@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.github.haoki81788021.simplecalculator.databinding.ActivityMainBinding
+import com.github.haoki81788021.simplecalculator.fragment.ResultDialog
 import com.github.haoki81788021.simplecalculator.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +67,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.clear.setOnClickListener {
             model.clear()
+        }
+
+        binding.details.setOnClickListener {
+            val result = binding.inputResultArea.text.toString()
+            ResultDialog.create(result).show(supportFragmentManager, "dialog")
         }
     }
 }
