@@ -19,13 +19,20 @@ class MainViewModel: ViewModel() {
     }
     var inputData = MutableLiveData("0")
     var operator = MutableLiveData(Operator.None)
-    private var item1 = 0
+    var isCalculator = MutableLiveData(false)
+    private var item1 = -1
     fun numberInput(number: String) {
         var prevNumber = inputData.value
         if (prevNumber == "0") {
             prevNumber = ""
         }
-        inputData.postValue(prevNumber + number)
+        val postNumber = prevNumber + number
+        inputData.postValue(postNumber)
+        if (item1 >= 0 && postNumber != "0") {
+            isCalculator.postValue(true)
+        } else {
+            isCalculator.postValue(false)
+        }
     }
 
     fun setOperation(operator: Operator) {
@@ -35,7 +42,30 @@ class MainViewModel: ViewModel() {
     }
 
     fun calculator() {
-
+        val item2 = inputData.value?.toInt() ?: return
+        val result = when (operator.value) {
+            Operator.Plus -> {
+                item1 + item2
+            }
+            Operator.Minus -> {
+                val res = item1 - item2
+                if (res < 0) {
+                    0
+                } else {
+                    res
+                }
+            }
+            Operator.Multi -> {
+                item1 * item2
+            }
+            Operator.Div -> {
+                item1 / item2
+            }
+            else -> 0
+        }
+        inputData.postValue(result.toString())
+        operator.postValue(Operator.None)
+        isCalculator.postValue(false)
     }
 
     fun clear() {

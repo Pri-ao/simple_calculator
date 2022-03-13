@@ -181,7 +181,7 @@
                 android:textSize="@dimen/font_size32" />
 
             <Button
-                android:id="@+id/num_eq"
+                android:id="@+id/equal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_column="3"

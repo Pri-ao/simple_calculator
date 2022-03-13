@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         model.operator.observe(this) {
             binding.showOperator.text = it.rawValue
         }
+        model.isCalculator.observe(this) {
+            binding.equal.isEnabled = it
+        }
         // 数字ボタンのイベント設定
         val numberButtons = listOf(
             binding.num0, binding.num1, binding.num2, binding.num3, binding.num4, binding.num5,
@@ -35,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         operatorButtons.forEach {
             val operator = MainViewModel.Operator.get(it.text.toString()) ?: return
             it.setOnClickListener { model.setOperation(operator) }
+        }
+
+        binding.equal.setOnClickListener {
+            model.calculator()
         }
     }
 }
