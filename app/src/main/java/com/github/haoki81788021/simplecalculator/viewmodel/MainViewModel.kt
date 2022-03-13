@@ -19,12 +19,18 @@ class MainViewModel: ViewModel() {
     }
     var inputData = MutableLiveData("0")
     var operator = MutableLiveData(Operator.None)
-
+    private var item1 = 0
     fun numberInput(number: String) {
-        inputData.postValue(number)
+        var prevNumber = inputData.value
+        if (prevNumber == "0") {
+            prevNumber = ""
+        }
+        inputData.postValue(prevNumber + number)
     }
 
     fun setOperation(operator: Operator) {
+        item1 = inputData.value?.toInt() ?: return
+        this.inputData.postValue("0")
         this.operator.postValue(operator)
     }
 
