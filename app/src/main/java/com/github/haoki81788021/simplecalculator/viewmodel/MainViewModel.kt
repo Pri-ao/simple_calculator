@@ -1,7 +1,9 @@
 package com.github.haoki81788021.simplecalculator.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.haoki81788021.simplecalculator.R
 
 class MainViewModel: ViewModel() {
     enum class Operator(val rawValue: String) {
@@ -20,6 +22,8 @@ class MainViewModel: ViewModel() {
     var inputData = MutableLiveData("0")
     var operator = MutableLiveData(Operator.None)
     var isCalculator = MutableLiveData(false)
+    // StringResourceIdを渡すようにする
+    var errorMessage: MutableLiveData<Int> = MutableLiveData()
     private var item1 = -1L
     fun numberInput(number: String) {
         var prevNumber = inputData.value
@@ -27,6 +31,10 @@ class MainViewModel: ViewModel() {
             prevNumber = ""
         }
         val postNumber = prevNumber + number
+        if (postNumber.length >= INPUT_LIMIT) {
+            errorMessage.postValue(R.string.error_input_limit)
+            return
+        }
         inputData.postValue(postNumber)
         if (item1 >= 0 && postNumber != "0") {
             isCalculator.postValue(true)
@@ -58,7 +66,9 @@ class MainViewModel: ViewModel() {
             }
             else -> return
         }
+        // オーバーフローしたなど計算結果がマイナスになったときは0に補正する
         if (result < 0) {
+            errorMessage.postValue(R.string.error_calculator_minus)
             result = 0
         }
         inputData.postValue(result.toString())
@@ -71,5 +81,9 @@ class MainViewModel: ViewModel() {
         inputData.postValue("0")
         operator.postValue(Operator.None)
         isCalculator.postValue(false)
+    }
+
+    companion object {
+        const val INPUT_LIMIT = 16
     }
 }

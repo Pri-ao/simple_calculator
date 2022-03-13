@@ -3,6 +3,7 @@ package com.github.haoki81788021.simplecalculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.github.haoki81788021.simplecalculator.databinding.ActivityMainBinding
 import com.github.haoki81788021.simplecalculator.viewmodel.MainViewModel
@@ -30,6 +31,14 @@ class MainActivity : AppCompatActivity() {
         }
         model.isCalculator.observe(this) {
             binding.equal.isEnabled = it
+        }
+        var toast: Toast? = null
+        model.errorMessage.observe(this) {
+            if (toast != null) {
+                toast?.cancel()
+            }
+            toast = Toast.makeText(this, it, Toast.LENGTH_SHORT)
+            toast?.show()
         }
     }
 
