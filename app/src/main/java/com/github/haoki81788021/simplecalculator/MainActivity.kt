@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         model.inputData.observe(this) {
             binding.inputResultArea.text = it
         }
+        model.operator.observe(this) {
+            binding.showOperator.text = it.rawValue
+        }
+        // 数字ボタンのイベント設定
         val numberButtons = listOf(
             binding.num0, binding.num1, binding.num2, binding.num3, binding.num4, binding.num5,
             binding.num6, binding.num7, binding.num8, binding.num9
@@ -24,6 +28,13 @@ class MainActivity : AppCompatActivity() {
         numberButtons.forEach {
             val number = it.text.toString()
             it.setOnClickListener { model.numberInput(number) }
+        }
+
+        // 演算子ボタンのイベント設定
+        val operatorButtons = listOf(binding.div, binding.multi, binding.minus, binding.plus)
+        operatorButtons.forEach {
+            val operator = MainViewModel.Operator.get(it.text.toString()) ?: return
+            it.setOnClickListener { model.setOperation(operator) }
         }
     }
 }

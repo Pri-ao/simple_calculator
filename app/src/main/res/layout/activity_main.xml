@@ -29,7 +29,7 @@
                 android:textSize="@dimen/font_size32" />
 
             <Button
-                android:id="@+id/num_div"
+                android:id="@+id/div"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_column="3"
@@ -69,7 +69,7 @@
                 android:textSize="@dimen/font_size32" />
 
             <Button
-                android:id="@+id/num_multi"
+                android:id="@+id/multi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -112,7 +112,7 @@
                 android:textSize="@dimen/font_size32" />
 
             <Button
-                android:id="@+id/num_minus"
+                android:id="@+id/minus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -156,12 +156,12 @@
                 android:textSize="@dimen/font_size32" />
 
             <Button
-                android:id="@+id/num_plus"
+                android:id="@+id/plus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="-"
+                android:text="+"
                 android:textSize="@dimen/font_size32" />
 
         </TableRow>
