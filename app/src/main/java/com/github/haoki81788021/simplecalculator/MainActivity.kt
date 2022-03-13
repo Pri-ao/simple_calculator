@@ -14,6 +14,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val model: MainViewModel by viewModels()
+
+        // データ変化を検知
+        setObserve(binding, model)
+        // 各種ボタンのイベント設定
+        setListener(binding, model)
+    }
+
+    private fun setObserve(binding: ActivityMainBinding, model: MainViewModel) {
         model.inputData.observe(this) {
             binding.inputResultArea.text = it
         }
@@ -23,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         model.isCalculator.observe(this) {
             binding.equal.isEnabled = it
         }
+    }
+
+    private fun setListener(binding: ActivityMainBinding, model: MainViewModel) {
         // 数字ボタンのイベント設定
         val numberButtons = listOf(
             binding.num0, binding.num1, binding.num2, binding.num3, binding.num4, binding.num5,
@@ -42,6 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.equal.setOnClickListener {
             model.calculator()
+        }
+
+        binding.clear.setOnClickListener {
+            model.clear()
         }
     }
 }

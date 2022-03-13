@@ -61,7 +61,7 @@ class MainViewModel: ViewModel() {
             Operator.Div -> {
                 item1 / item2
             }
-            else -> 0
+            else -> return
         }
         inputData.postValue(result.toString())
         operator.postValue(Operator.None)
@@ -69,6 +69,9 @@ class MainViewModel: ViewModel() {
     }
 
     fun clear() {
-
+        item1 = -1
+        inputData.postValue("0")
+        operator.postValue(Operator.None)
+        isCalculator.postValue(false)
     }
 }
