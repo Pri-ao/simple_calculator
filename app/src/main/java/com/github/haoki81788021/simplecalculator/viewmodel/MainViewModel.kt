@@ -25,10 +25,12 @@ class MainViewModel: ViewModel() {
     // StringResourceIdを渡すようにする
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
     private var item1 = -1L
+    private var isResult = false
     fun numberInput(number: String) {
         var prevNumber = inputData.value
-        if (prevNumber == "0") {
+        if (prevNumber == "0" || isResult) {
             prevNumber = ""
+            isResult = false
         }
         val postNumber = prevNumber + number
         if (postNumber.length >= INPUT_LIMIT) {
@@ -74,6 +76,7 @@ class MainViewModel: ViewModel() {
         inputData.postValue(result.toString())
         operator.postValue(Operator.None)
         isCalculator.postValue(false)
+        isResult = true
     }
 
     fun clear() {
