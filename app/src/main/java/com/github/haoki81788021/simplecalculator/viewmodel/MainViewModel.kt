@@ -8,7 +8,7 @@ class MainViewModel: ViewModel() {
         None(""), Plus("+"), Minus("-"), Multi("×"), Div("/");
         companion object {
             fun get(rawValue: String): Operator? {
-                for (operator in Operator.values()) {
+                for (operator in values()) {
                     if (operator.rawValue == rawValue) {
                         return operator
                     }
@@ -20,7 +20,7 @@ class MainViewModel: ViewModel() {
     var inputData = MutableLiveData("0")
     var operator = MutableLiveData(Operator.None)
     var isCalculator = MutableLiveData(false)
-    private var item1 = -1
+    private var item1 = -1L
     fun numberInput(number: String) {
         var prevNumber = inputData.value
         if (prevNumber == "0") {
@@ -36,24 +36,19 @@ class MainViewModel: ViewModel() {
     }
 
     fun setOperation(operator: Operator) {
-        item1 = inputData.value?.toInt() ?: return
+        item1 = inputData.value?.toLong() ?: return
         this.inputData.postValue("0")
         this.operator.postValue(operator)
     }
 
     fun calculator() {
-        val item2 = inputData.value?.toInt() ?: return
-        val result = when (operator.value) {
+        val item2 = inputData.value?.toLong() ?: return
+        var result = when (operator.value) {
             Operator.Plus -> {
                 item1 + item2
             }
             Operator.Minus -> {
-                val res = item1 - item2
-                if (res < 0) {
-                    0
-                } else {
-                    res
-                }
+                item1 - item2
             }
             Operator.Multi -> {
                 item1 * item2
@@ -62,6 +57,9 @@ class MainViewModel: ViewModel() {
                 item1 / item2
             }
             else -> return
+        }
+        if (result < 0) {
+            result = 0
         }
         inputData.postValue(result.toString())
         operator.postValue(Operator.None)
