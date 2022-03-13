@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleCalculator</string>
+    <string name="error_input_limit">それ以上入力できません。</string>
+    <string name="error_calculator_minus">計算する桁数が大きいまたは結果がマイナスになったため0を表示します。</string>
 </resources>
